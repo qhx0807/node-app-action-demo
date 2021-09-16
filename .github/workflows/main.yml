@@ -1,0 +1,39 @@
+# main.yml
+name: deploy to aliyun
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 切换分支
+      - name: Checkout
+        uses: actions/checkout@master
+      # 使用 node:14
+      - name: use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.17.6
+      # Deploy
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@v2.0.7
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_KEY }}
+          ARGS: "-avz --delete"
+          SOURCE: "./"
+          REMOTE_HOST: "118.24.5.250"
+          REMOTE_USER: "root"
+          TARGET: "/www/wwwroot/actions-demo"
+      - name: start server
+        uses: appleboy/ssh-action@master
+        with:
+          host: "118.24.5.250"
+          username: "root"
+          key: ${{ secrets.SERVER_KEY }}
+          script: |
+            cd "/www/wwwroot/actions-demo"
+            npm install
+            npm run stop
+            npm run start
