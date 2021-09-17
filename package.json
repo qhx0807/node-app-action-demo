@@ -23,7 +23,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-node-app-action-demo",
+    "start": "egg-scripts start --daemon --title=egg-server-node-app-action-demo --port=8021",
     "stop": "egg-scripts stop --title=egg-server-node-app-action-demo",
     "dev": "egg-bin dev",
     "debug": "egg-bin debug",
