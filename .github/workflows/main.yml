@@ -17,8 +17,12 @@ jobs:
         with:
           node-version: 14.17.6
       # 下载依赖
-      # - name: npm install
-      #   run: npm install --production
+      - name: npm install
+        run: npm install --production
+      - name: start serve
+        run: |
+          npm start
+          npm stop
       # Deploy
       - name: Deploy
         uses: easingthemes/ssh-deploy@v2.0.7
@@ -37,6 +41,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd "/www/wwwroot/actions-demo"
-            npm install --production
+            # npm install --production
             npm run stop
             npm run start
